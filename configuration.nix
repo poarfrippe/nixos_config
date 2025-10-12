@@ -82,9 +82,6 @@
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -96,12 +93,11 @@
     vim
     wget
     neofetch
-    alacritty	#terminal
-    #btop 	#system monitor
     cowsay
-    spotify
     sl  
     git
+    fzf
+    python3
   ];
 
   home-manager = {

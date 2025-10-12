@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
   home.username = "fripp";
   home.homeDirectory = "/home/fripp";
 
@@ -15,25 +13,17 @@
   # release notes.
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
+  nixpkgs.config.allowUnfree = true;
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+  home.packages = with pkgs; [
+    hello
+    iotop # io monitoring
+    iftop # network monitoring
+    calibre #ebook manager
+    logseq
+    spotify
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -87,5 +77,21 @@
     userEmail = "philipp.gruber02@gmail.com";
     userName = "fripp";
   };
+
+  programs.alacritty = {
+    enable = true;
+    # custom settings
+    settings = {
+      env.TERM = "xterm-256color";
+      font = {
+        size = 12;
+        #draw_bold_text_with_bright_colors = true;
+      };
+      scrolling.multiplier = 5;
+      selection.save_to_clipboard = true;
+    };
+  };  
+
+  programs.firefox.enable = true;
 
 }
