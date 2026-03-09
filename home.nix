@@ -24,6 +24,12 @@
     calibre #ebook manager
     logseq
     spotify
+    arduino-ide
+    protonvpn-gui
+    qbittorrent
+    vlc
+    libreoffice-qt
+    obsidian
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
