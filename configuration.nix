@@ -16,6 +16,24 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  systemd = {
+    user.services.polkit-gnome-authentication-agent-1 = {
+      description = "polkit-gnome-authentication-agent-1";
+      wantedBy = [ "graphical-session.target" ];
+      wants = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart =
+          "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+    };
+  };
+
+
   networking.hostName = "nixos"; # Define your hostname.
 
   # Enable networking
@@ -42,12 +60,23 @@
   };
 
   # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
+  services.xserver.windowManager.i3.enable = true;
+  #services.xserver.windowManager.i3.extraPackages = with pkgs: [
+  #  i3status
+  #];
 
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  services.xserver.desktopManager = {
+    xterm.enable = false;
+    xfce = {
+      enable = true;
+      noDesktop = true;
+      enableXfwm = false;
+    };
+  };
+
+  services.xserver.displayManager.defaultSession = "xfce+i3";
+  services.xserver.displayManager.lightdm.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -67,12 +96,25 @@
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
+  security.polkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
+  services = {
+    blueman.enable = true;
+    gnome.gnome-keyring.enable = true;
+    gvfs.enable = true;
+  };
+
+  security.pam.services = {
+    i3lock.enable = true;
+  };
+
+  programs.dconf.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.fripp = {
@@ -87,6 +129,7 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.pulseaudio = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -101,6 +144,15 @@
     git
     fzf
     python3
+    gnome-keyring
+    polkit_gnome
+    rofi
+    pulseaudioFull
+    picom # compositor windows
+    pasystray # pulseaudio system tray
+    nitrogen # wallpaper
+    networkmanagerapplet
+    
   ];
 
   home-manager = {

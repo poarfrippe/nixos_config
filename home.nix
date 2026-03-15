@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+
+  imports = [
+    ./home/i3.nix
+  ];
+
   home.username = "fripp";
   home.homeDirectory = "/home/fripp";
 
@@ -30,6 +35,8 @@
     vlc
     libreoffice-qt
     obsidian
+    dmenu
+    kdePackages.okular
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -98,6 +105,6 @@
     };
   };  
 
-  programs.firefox.enable = true;
+  programs.firefox.enable = true; 
 
 }
