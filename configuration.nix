@@ -30,6 +30,18 @@
     };
   };
 
+  systemd.user.services.greenclip = {
+    description = "greenclip clipboard manager";
+    wantedBy = [ "graphical-session.target" ];
+    wants = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.haskellPackages.greenclip}/bin/greenclip daemon";
+      Restart = "always";
+    };
+  };
+
   nix = {
     gc = {
       automatic = true;
@@ -125,6 +137,7 @@
       # xfce4-settings
       xfce4-taskmanager
       xfce4-terminal
+      xfce4-screensaver
     ];
     systemPackages = with pkgs; [
       vim
@@ -136,12 +149,6 @@
       python3
       gnome-keyring
       polkit_gnome
-      rofi
-      pulseaudioFull
-      picom            # compositor windows
-      pasystray        # pulseaudio system tray
-      nitrogen         # wallpaper
-      networkmanagerapplet
     ];
   };
 
@@ -182,11 +189,4 @@
     };
   };
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It's perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
 }

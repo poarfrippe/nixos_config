@@ -11,11 +11,18 @@ in {
       fonts = [ "DejaVu Sans Mono, FontAwesome 6" ];
       defaultWorkspace = "workspace number 1";
 
+      startup = [
+        { command = "${pkgs.feh}/bin/feh --bg-scale ${config.home.homeDirectory}/Pictures/wallpapers"; notification = false; }
+        { command = "--no-startup-id ${pkgs.xss-lock}/bin/xss-lock --transfer-sleep-lock -- i3lock -i /${config.home.homeDirectory}/Pictures/wallpapers/frutigerAeroWallpaper.png --nofork"; notification = false; }
+      ];
+
       keybindings = lib.mkOptionDefault {
         "${mod}+p" = "exec ${pkgs.i3}/bin/i3-dmenu-desktop";
         "${mod}+d" = "exec ${pkgs.rofi}/bin/rofi -show drun";
         "${mod}+x" = "exec sh -c '${pkgs.maim}/bin/maim -s | xclip -selection clipboard -t image/png'";
-        "${mod}+l" = "exec sh -c '${pkgs.i3lock}/bin/i3lock -c 222222 & sleep 5 && xset dpms force off'";
+        "${mod}+l" = "exec loginctl lock-session";
+
+        "${mod}+v" = "exec rofi -modi 'clipboard:${pkgs.haskellPackages.greenclip}/bin/greenclip print' -show clipboard";
 
         # Move
         "${mod}+Shift+j" = "move left";

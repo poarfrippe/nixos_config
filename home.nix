@@ -36,6 +36,16 @@
       kdePackages.okular
       nerd-fonts.jetbrains-mono
       vscode
+      xss-lock
+      rofi
+      pulseaudioFull
+      picom            # compositor windows
+      pasystray        # pulseaudio system tray
+      feh              # wallpaper
+      networkmanagerapplet
+      maim
+      xclip
+      haskellPackages.greenclip
     ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -91,9 +101,11 @@
 
     git = {
       enable = true;
-      userEmail = "philipp.gruber02@gmail.com";
-      userName = "fripp";
-      extraConfig = {
+      settings = {
+        user = {
+          email = "philipp.gruber02@gmail.com";
+          name = "fripp";
+        };
         safe.directory = [ "/etc/nixos" ];
       };
     };
@@ -112,5 +124,17 @@
     };
 
     firefox.enable = true;
+    
+    vim = {
+      enable = true;
+      settings = {
+          shiftwidth = 2;
+          tabstop = 2;
+          expandtab = true;
+        };
+      extraConfig = ''
+          set clipboard=unnamedplus
+        '';
+      };
   };
 }
