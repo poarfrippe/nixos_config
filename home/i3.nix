@@ -13,7 +13,7 @@ in {
 
       startup = [
         { command = "${pkgs.feh}/bin/feh --bg-scale ${config.home.homeDirectory}/Pictures/wallpapers"; notification = false; }
-        { command = "--no-startup-id ${pkgs.xss-lock}/bin/xss-lock --transfer-sleep-lock -- i3lock -i /${config.home.homeDirectory}/Pictures/wallpapers/frutigerAeroWallpaper.png --nofork"; notification = false; }
+        { command = "--no-startup-id ${pkgs.xss-lock}/bin/xss-lock --transfer-sleep-lock -- i3lock  -i /${config.home.homeDirectory}/Pictures/wallpapers/frutigerAeroWallpaper.png --nofork --show-failed-attempts"; notification = false; }
       ];
 
       keybindings = lib.mkOptionDefault {

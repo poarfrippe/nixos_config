@@ -3,6 +3,7 @@
 {
   imports = [
     ./home/i3.nix
+    ./home/neovim.nix
   ];
 
   home = {
@@ -34,6 +35,7 @@
       libreoffice-qt
       obsidian
       kdePackages.okular
+      kdePackages.filelight
       nerd-fonts.jetbrains-mono
       vscode
       xss-lock
@@ -46,6 +48,9 @@
       maim
       xclip
       haskellPackages.greenclip
+      zip
+      unzip
+      webcamoid
     ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -137,4 +142,11 @@
         '';
       };
   };
+
+  xfconf.settings = {
+    "xfce4-session" = {
+      "general/LockCommand" = "loginctl lock-session";
+    };
+  };
+
 }
