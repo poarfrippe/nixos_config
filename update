@@ -2,3 +2,4 @@
 nix flake update && nixos-rebuild switch
 
 # auch flakes werden halt rebuilded. wenn in homemanager was hinzugefuegt, dann passt mit rebuild switch.
+# hallo!
