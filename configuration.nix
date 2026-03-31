@@ -38,7 +38,9 @@
     serviceConfig = {
       Type = "simple";
       ExecStart = "${pkgs.haskellPackages.greenclip}/bin/greenclip daemon";
-      Restart = "always";
+      Restart = "on-failure";
+      RestartSec = 1;
+      TimeoutStopSec = 10;
     };
   };
 

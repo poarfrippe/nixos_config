@@ -8,6 +8,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # aha hier koennte ich wahrscheinlich eine custom i3lock version herballern! oder?
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {

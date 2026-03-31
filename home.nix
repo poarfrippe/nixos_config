@@ -3,7 +3,7 @@
 {
   imports = [
     ./home/i3.nix
-    ./home/neovim.nix
+    ./home/nvim.nix
   ];
 
   home = {
