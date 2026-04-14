@@ -115,6 +115,7 @@
     blueman.enable = true;
     gnome.gnome-keyring.enable = true;
     gvfs.enable = true;
+    usbmuxd.enable = true;
   };
 
   console.keyMap = "us";

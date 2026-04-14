@@ -12,9 +12,15 @@
     vimAlias = true;
     vimdiffAlias = true;
 
+    initLua = ''
+      ${builtins.readFile ./nvim/options.lua}
+    '';
+    
     extraPackages = with pkgs; [
       lua-language-server
 #      rnix-lsp
+#aha ahnscheinend da nil_ls oder nixd. schaust du in lspconfig-all
+      rust-analyzer
 
       xclip
     ];
@@ -70,8 +76,5 @@
 
     ];
 
-    initLua = ''
-      ${builtins.readFile ./nvim/options.lua}
-    '';
   };
 }

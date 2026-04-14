@@ -51,6 +51,12 @@
       zip
       unzip
       webcamoid
+      #cargo
+      #rustc
+      fd #needed by telescope
+      ripgrep #needed by telescope
+      libimobiledevice
+      ifuse # use "ifuse /tmp/iphone" to mount and "fusermount -u /temp/iphone" to unmont
     ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
