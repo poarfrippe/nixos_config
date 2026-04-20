@@ -29,6 +29,7 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 require('neodev').setup()
 vim.lsp.config('lua_ls', {
 
+  on_attach = on_attach,
   cmd = { 'lua-language-server' },
   -- Filetypes to automatically attach to.
   filetypes = { 'lua' },
@@ -95,17 +96,19 @@ vim.lsp.enable('lua_ls')
 
 
 -- nachschauen in :h lspconfig-all
-vim.lsp.config('rnix', {
-  cmd = { 'rnix-lsp' },
+vim.lsp.config('nixd', {
+  cmd = { 'nixd' },
   filetypes = { 'nix' },
   on_attach = on_attach,
   capabilities = capabilities,
+  root_markers = {"flake.nix", ".git" },
 })
-vim.lsp.enable('rnix')
+vim.lsp.enable('nixd')
 
 --rust_analyzer
 vim.lsp.config('rust_analyzer', {
   cmd = { 'rust-analyzer' },
+  on_attach = on_attach,
   filetypes = { 'rust' },
   settings = {
     ['rust-analyzer'] = {

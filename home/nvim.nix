@@ -18,14 +18,20 @@
     
     extraPackages = with pkgs; [
       lua-language-server
-#      rnix-lsp
-#aha ahnscheinend da nil_ls oder nixd. schaust du in lspconfig-all
+      nixd
       rust-analyzer
 
       xclip
     ];
 
     plugins = with pkgs.vimPlugins; [
+
+      {
+        plugin = telescope-nvim;
+        config = toLuaFile ./nvim/plugin/telescope.lua;
+      }
+
+      telescope-fzf-native-nvim
 
       {
         plugin = nvim-lspconfig;
@@ -45,18 +51,11 @@
       neodev-nvim
 
       #code completion
-      nvim-cmp 
       {
         plugin = nvim-cmp;
         config = toLuaFile ./nvim/plugin/cmp.lua;
       }
 
-      {
-        plugin = telescope-nvim;
-        config = toLuaFile ./nvim/plugin/telescope.lua;
-      }
-
-      telescope-fzf-native-nvim
       plenary-nvim
 
       cmp_luasnip
@@ -67,10 +66,18 @@
 
 
       #botom line replacing vim default
-      lualine-nvim
+      {
+        plugin = lualine-nvim;
+        config = toLua "require(\"lualine\").setup()";
+      }
       nvim-web-devicons
 
       #treesitter
+      nvim-treesitter.withAllGrammars #da ist jetzt ohne die config...
+      /* {
+        plugin = nvim-treesitter.withAllGrammars;
+        config = toLuaFile ./nvim/plugin/treesitter.lua;
+      } */
 
       vim-nix
 

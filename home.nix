@@ -56,7 +56,8 @@
       fd #needed by telescope
       ripgrep #needed by telescope
       libimobiledevice
-      ifuse # use "ifuse /tmp/iphone" to mount and "fusermount -u /temp/iphone" to unmont
+      ifuse # use "ifuse ~/iphone" to mount and "fusermount -u ~/iphone" to unmont; Wenn nicht fukt, dann schön unmounten und solche sachen machen: sudo rm -rf /var/lib/lockdown/*; sudo systemctl restart usbmuxd
+      discord
     ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
