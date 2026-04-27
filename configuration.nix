@@ -57,9 +57,17 @@
   };
 
   networking = {
-    hostName = "nixos";
+    hostName = "Nixosbtw";
     networkmanager.enable = true;
-    firewall.checkReversePath = false;
+    firewall = {
+      checkReversePath = false;
+      allowedUDPPorts = [
+        53317
+      ];
+      allowedTCPPorts = [
+        53317
+      ];
+    };
   };
 
   time.timeZone = "Europe/Vienna";

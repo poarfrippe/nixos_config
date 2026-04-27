@@ -37,6 +37,7 @@ vim.lsp.config('lua_ls', {
   -- Files that share a root directory will reuse the LSP server connection.
   -- Nested lists indicate equal priority, see |vim.lsp.Config|.
   root_markers = { { '.luarc.json', '.luarc.jsonc' }, '.git' },
+  capabilities = capabilities,
 
   on_init = function(client)
     if client.workspace_folders then
@@ -110,6 +111,7 @@ vim.lsp.config('rust_analyzer', {
   cmd = { 'rust-analyzer' },
   on_attach = on_attach,
   filetypes = { 'rust' },
+  capabilities = capabilities,
   settings = {
     ['rust-analyzer'] = {
       lens = {
@@ -152,3 +154,11 @@ vim.lsp.config('rust_analyzer', {
 })
 vim.lsp.enable('rust_analyzer')
 
+vim.lsp.config('marksman', {
+  cmd = { 'marksman' },
+  filetypes = { 'markdown' },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  root_markers = {".marksman.toml", ".git" },
+})
+vim.lsp.enable('marksman')

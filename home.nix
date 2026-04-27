@@ -22,7 +22,6 @@
     # The home.packages option allows you to install Nix packages into your
     # environment.
     packages = with pkgs; [
-      hello
       iotop          # io monitoring
       iftop          # network monitoring
       calibre        # ebook manager
@@ -51,13 +50,14 @@
       zip
       unzip
       webcamoid
-      #cargo
-      #rustc
       fd #needed by telescope
       ripgrep #needed by telescope
       libimobiledevice
       ifuse # use "ifuse ~/iphone" to mount and "fusermount -u ~/iphone" to unmont; Wenn nicht fukt, dann schön unmounten und solche sachen machen: sudo rm -rf /var/lib/lockdown/*; sudo systemctl restart usbmuxd
       discord
+      gimp
+      localsend
+      librepods
     ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage

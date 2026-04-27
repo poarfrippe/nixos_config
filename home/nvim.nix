@@ -19,9 +19,6 @@
     extraPackages = with pkgs; [
       lua-language-server
       nixd
-      rust-analyzer
-
-      xclip
     ];
 
     plugins = with pkgs.vimPlugins; [
