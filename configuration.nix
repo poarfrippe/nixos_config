@@ -88,6 +88,10 @@
   };
 
   services = {
+    displayManager = {
+      defaultSession = "xfce+i3";
+      #lightdm.enable = true;
+    };
     xserver = {
       enable = true;
       windowManager.i3.enable = true;
@@ -98,10 +102,6 @@
           noDesktop = true;
           enableXfwm = false;
         };
-      };
-      displayManager = {
-        defaultSession = "xfce+i3";
-        lightdm.enable = true;
       };
       xkb = {
         layout = "us";

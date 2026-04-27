@@ -8,7 +8,10 @@ in {
     config = {
       modifier = mod;
       terminal = "alacritty";
-      fonts = [ "DejaVu Sans Mono, FontAwesome 6" ];
+      fonts = {
+        names = [ "DejaVu Sans Mono" "FontAwesome 6" ];
+        size = 11.0;
+      };
       defaultWorkspace = "workspace number 1";
 
       startup = [

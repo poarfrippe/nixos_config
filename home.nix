@@ -28,7 +28,7 @@
       logseq
       spotify
       arduino-ide
-      protonvpn-gui
+      proton-vpn
       qbittorrent
       vlc
       libreoffice-qt
@@ -135,8 +135,11 @@
       };
     };
 
-    firefox.enable = true;
-    
+    firefox = {
+      enable = true;
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
+    };
+
     vim = {
       enable = true;
       settings = {

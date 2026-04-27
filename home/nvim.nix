@@ -1,16 +1,14 @@
 { config, lib, pkgs, ... }:
 
 {
-  programs.neovim =
-  let
-    toLua = str: "lua << EOF\n${str}\nEOF\n";
-    toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
-  in
-  {
+  programs.neovim = {
     enable = true;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
+
+    withRuby = false;
+    withPython3 = false;
 
     initLua = ''
       ${builtins.readFile ./nvim/options.lua}
@@ -24,23 +22,27 @@
     plugins = with pkgs.vimPlugins; [
 
       {
+        type = "lua";
         plugin = telescope-nvim;
-        config = toLuaFile ./nvim/plugin/telescope.lua;
+        config = "${builtins.readFile ./nvim/plugin/telescope.lua}";
       }
 
       telescope-fzf-native-nvim
 
       {
+        type = "lua";
         plugin = nvim-lspconfig;
-        config = toLuaFile ./nvim/plugin/lsp.lua;
+        config = "${builtins.readFile ./nvim/plugin/lsp.lua}";
       }
 
       {
+        type = "lua";
         plugin = comment-nvim;
-        config = toLua "require(\"Comment\").setup()";
+        config = "require(\"Comment\").setup()";
       }
 
       {
+        type = "viml";
         plugin = gruvbox-nvim;
         config = "colorscheme gruvbox";
       }
@@ -49,8 +51,9 @@
 
       #code completion
       {
+        type = "lua";
         plugin = nvim-cmp;
-        config = toLuaFile ./nvim/plugin/cmp.lua;
+        config = "${builtins.readFile ./nvim/plugin/cmp.lua}";
       }
 
       plenary-nvim
@@ -64,8 +67,9 @@
 
       #botom line replacing vim default
       {
+        type = "lua";
         plugin = lualine-nvim;
-        config = toLua "require(\"lualine\").setup()";
+        config = "require(\"lualine\").setup()";
       }
       nvim-web-devicons
 
