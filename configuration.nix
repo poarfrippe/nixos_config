@@ -54,6 +54,7 @@
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
     };
+    registry.nixpkgs.flake = inputs.nixpkgs;
   };
 
   networking = {
@@ -203,6 +204,10 @@
   nixpkgs.config = {
     allowUnfree = true;
     pulseaudio = true;
+    #kann man dann eppr rausnehmen oder versuchen beim naechsten update
+    permittedInsecurePackages = [
+       "electron-39.8.10"
+    ];
   };
 
   users.users.fripp = {
@@ -212,6 +217,8 @@
   };
 
   home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;   # optional, but commonly paired with it
     extraSpecialArgs = { inherit inputs; };
     users."fripp" = import ./home.nix;
   };
