@@ -19,6 +19,14 @@ vim.o.updatetime = 300
 vim.o.termguicolors = true
 
 vim.o.mouse = 'a'
+vim.opt.cursorline = true
+vim.opt.showmode = false
+
+-- Searching
+vim.opt.incsearch = true            -- search as characters are entered
+vim.opt.hlsearch = false            -- do not highlight matches
+vim.opt.ignorecase = true           -- ignore case in searches by default
+vim.opt.smartcase = true            -- but make it case sensitive if an uppercase is entered
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -31,6 +39,3 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function() vim.hl.on_yank() end,
 })
-
-local builtin = require 'telescope.builtin'
-vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })

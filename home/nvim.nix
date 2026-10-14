@@ -17,6 +17,7 @@
     extraPackages = with pkgs; [
       lua-language-server
       nixd
+      tree-sitter
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -74,11 +75,12 @@
       nvim-web-devicons
 
       #treesitter
-      nvim-treesitter.withAllGrammars #da ist jetzt ohne die config...
-      /* {
+      # nvim-treesitter.withAllGrammars #da ist jetzt ohne die config...
+      {
+        type = "lua";
         plugin = nvim-treesitter.withAllGrammars;
-        config = toLuaFile ./nvim/plugin/treesitter.lua;
-      } */
+        config = "${builtins.readFile ./nvim/plugin/treesitter.lua}";
+      }
 
       vim-nix
 

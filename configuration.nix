@@ -58,7 +58,12 @@
 
   networking = {
     hostName = "Nixosbtw";
-    networkmanager.enable = true;
+    networkmanager = {
+    	enable = true;
+        plugins = with pkgs; [
+      	  networkmanager-openvpn
+        ];
+    };
     firewall = {
       checkReversePath = false;
       allowedUDPPorts = [
@@ -108,6 +113,12 @@
         options = "ctrl:nocaps";
         variant = "intl";
       };
+      videoDrivers = [ "modesetting" ];
+    };
+    picom = {
+      enable = true;
+      vSync = true;
+      backend = "glx";   # or "xrender" if glx causes issues
     };
     printing.enable = true;
     openssh.enable = true;
@@ -124,6 +135,25 @@
     gnome.gnome-keyring.enable = true;
     gvfs.enable = true;
     usbmuxd.enable = true;
+    openvpn.servers = {
+      deutschlandVPN  = { 
+        config = "config /home/fripp/openVpn/deutschlandVPN.conf";
+        updateResolvConf = true;
+	autoStart = false;
+      };
+    };
+    udev.extraRules = ''
+	  # Xilinx platform cable / onboard FTDI (Digilent, Basys3, Arty, Nexys etc.)
+	  SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6010", MODE="0666"
+	  SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6014", MODE="0666"
+	  SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6011", MODE="0666"
+
+	  # Xilinx Platform Cable USB / USB II
+	  SUBSYSTEM=="usb", ATTR{idVendor}=="03fd", MODE="0666"
+
+	  # Digilent
+	  SUBSYSTEM=="usb", ATTR{idVendor}=="1443", MODE="0666"
+	'';
   };
 
   console.keyMap = "us";
@@ -135,6 +165,7 @@
   };
 
   programs.dconf.enable = true;
+  programs.nix-ld.enable = true;
 
   environment = {
     xfce.excludePackages = with pkgs; [
@@ -143,7 +174,7 @@
       # ristretto
       xfce4-appfinder
       # xfce4-notifyd
-      xfce4-screenshooter
+      # xfce4-screenshooter
       # xfce4-session
       # xfce4-settings
       xfce4-taskmanager
@@ -160,7 +191,13 @@
       python3
       gnome-keyring
       polkit_gnome
+      fwupd # usage: fwupdmgr get-devices; fwupdmgr refresh; fwupdmgr get-updates; fwupdmgr update;
+      file
+      openvpn
     ];
+    sessionVariables = {
+      LIBVA_DRIVER_NAME = "iHD";
+    };
   };
 
   nixpkgs.config = {
@@ -179,24 +216,34 @@
     users."fripp" = import ./home.nix;
   };
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = false;
-    settings = {
-      General = {
-        # Shows battery charge of connected devices on supported
-        # Bluetooth adapters. Defaults to 'false'.
-        Experimental = true;
-        # When enabled other devices can connect faster to us, however
-        # the tradeoff is increased power consumption. Defaults to 'false'.
-        FastConnectable = true;
+  hardware = {
+    bluetooth = {
+      enable = true;
+      powerOnBoot = false;
+      settings = {
+        General = {
+          # Shows battery charge of connected devices on supported
+          # Bluetooth adapters. Defaults to 'false'.
+          Experimental = true;
+          # When enabled other devices can connect faster to us, however
+          # the tradeoff is increased power consumption. Defaults to 'false'.
+          FastConnectable = true;
+        };
+        Policy = {
+          # Enable all controllers when they are found. This includes
+          # adapters present on start as well as adapters that are plugged
+          # in later on. Defaults to 'true'.
+          AutoEnable = true;
+        };
       };
-      Policy = {
-        # Enable all controllers when they are found. This includes
-        # adapters present on start as well as adapters that are plugged
-        # in later on. Defaults to 'true'.
-        AutoEnable = true;
-      };
+    };
+    opengl = {
+      enable = true;
+      extraPackages = with pkgs; [
+        intel-media-driver  # iHD — correct driver for UHD 620
+        libva-vdpau-driver    # fallbacks
+        libvdpau-va-gl 
+      ];
     };
   };
 

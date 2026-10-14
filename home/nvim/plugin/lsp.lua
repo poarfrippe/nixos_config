@@ -1,13 +1,14 @@
 local on_attach = function(_, bufnr)
-
-  local bufmap = function(keys, func)
-    vim.keymap.set('n', keys, func, { buffer = bufnr })
+  local bufmap = function(keys, func, desc)
+    desc = desc or 'no description'
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
   bufmap('<leader>r', vim.lsp.buf.rename)
   bufmap('<leader>a', vim.lsp.buf.code_action)
 
-  bufmap('gd', vim.lsp.buf.definition)
+  -- ok diese keybinds werden nicht richtig gesetzt...
+  bufmap('gd', vim.lsp.buf.definition, 'lsp go to definition')
   bufmap('gD', vim.lsp.buf.declaration)
   bufmap('gI', vim.lsp.buf.implementation)
   bufmap('<leader>D', vim.lsp.buf.type_definition)
@@ -16,8 +17,9 @@ local on_attach = function(_, bufnr)
   bufmap('<leader>s', require('telescope.builtin').lsp_document_symbols)
   bufmap('<leader>S', require('telescope.builtin').lsp_dynamic_workspace_symbols)
 
-  bufmap('K', vim.lsp.buf.hover)
+  bufmap('K', vim.lsp.buf.hover, 'Lsp hover')
 
+  -- type :Format to format code
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, {})
@@ -27,6 +29,9 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 require('neodev').setup()
+
+-- different lsp setups
+-- nachschauen in :h lspconfig-all
 vim.lsp.config('lua_ls', {
 
   on_attach = on_attach,
@@ -43,8 +48,8 @@ vim.lsp.config('lua_ls', {
     if client.workspace_folders then
       local path = client.workspace_folders[1].name
       if
-        path ~= vim.fn.stdpath('config')
-        and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+          path ~= vim.fn.stdpath('config')
+          and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
       then
         return
       end
@@ -96,13 +101,12 @@ vim.lsp.config('lua_ls', {
 vim.lsp.enable('lua_ls')
 
 
--- nachschauen in :h lspconfig-all
 vim.lsp.config('nixd', {
   cmd = { 'nixd' },
   filetypes = { 'nix' },
   on_attach = on_attach,
   capabilities = capabilities,
-  root_markers = {"flake.nix", ".git" },
+  root_markers = { "flake.nix", ".git" },
 })
 vim.lsp.enable('nixd')
 
@@ -159,6 +163,14 @@ vim.lsp.config('marksman', {
   filetypes = { 'markdown' },
   on_attach = on_attach,
   capabilities = capabilities,
-  root_markers = {".marksman.toml", ".git" },
+  root_markers = { ".marksman.toml", ".git" },
 })
 vim.lsp.enable('marksman')
+
+-- funkt auch ohne, aber wenn haben willst dann prober ty server als cmd. weil ty failed
+vim.lsp.config('ty', {
+  on_attach = on_attach,
+  filetypes = { "python" },
+  root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
+})
+vim.lsp.enable('ty')

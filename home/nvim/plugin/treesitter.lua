@@ -1,6 +1,6 @@
 -- not used atm
-require('nvim-treesitter.configs').setup {
-    ensure_installed = {},
+require('nvim-treesitter.config').setup {
+    ensure_installed = { 'python' },
 
     auto_install = false,
 

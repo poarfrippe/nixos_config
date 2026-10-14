@@ -58,6 +58,15 @@
       gimp
       localsend
       librepods
+      intel-gpu-tools
+      ffmpeg
+      supersonic
+      texstudio
+      texlive.combined.scheme-medium
+      zoom-us
+      # protonmail-bridge funzt ja garnicht
+      teams-for-linux
+      signal-desktop
     ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -150,8 +159,12 @@
       extraConfig = ''
           set clipboard=unnamedplus
         '';
-      };
-  };
+    };
+
+    thunderbird = {
+      enable = true;
+    };
+ };
 
   xfconf.settings = {
     "xfce4-session" = {

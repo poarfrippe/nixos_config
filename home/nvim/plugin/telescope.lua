@@ -11,3 +11,11 @@ require('telescope').setup({
 })
 
 require('telescope').load_extension('fzf')
+
+local builtin = require 'telescope.builtin'
+vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+vim.keymap.set('n', '<leader>ff', builtin.find_files , { desc = '[f]uzzy [f]ind' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {desc = '[f]uzzy live [g]rep'})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {desc = '[f]uzzy [b]uffers'})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {desc = '[f]uzzy [h]elp tags'})
+vim.keymap.set('n', '<leader>fs', builtin.git_status, {desc = '[f]uzzy git [s]tatus'})
