@@ -65,6 +65,13 @@
       # protonmail-bridge # funzt irgendwie ned 
       teams-for-linux
       signal-desktop
+      fishPlugins.fzf-fish
+      fishPlugins.done
+      fishPlugins.forgit #lernen wie git promt bla
+      fishPlugins.hydro
+      fishPlugins.grc
+      grc
+      nicotine-plus
     ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -136,6 +143,21 @@
 
     fish = {
       enable = true;
+      interactiveShellInit = ''
+        set fish_greeting # Disable greeting
+        set -g hydro_color_pwd cyan
+        set -g hydro_color_git magenta
+        set -g hydro_color_prompt green
+        set -g hydro_color_error red
+        set -g hydro_color_duration yellow
+      '';
+      plugins = with pkgs.fishPlugins; [
+        { name = "fzf-fish"; src = fzf-fish.src; }
+        { name = "done";     src = done.src; }
+        { name = "forgit";   src = forgit.src; }
+        { name = "hydro";    src = hydro.src; }
+        { name = "grc";      src = grc.src; }
+      ];
     };
 
     alacritty = {
