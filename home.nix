@@ -27,7 +27,6 @@
       calibre        # ebook manager
       logseq
       spotify
-      arduino-ide
       proton-vpn
       qbittorrent
       vlc
@@ -36,7 +35,6 @@
       kdePackages.okular
       kdePackages.filelight
       nerd-fonts.jetbrains-mono
-      vscode
       xss-lock
       rofi
       pulseaudioFull
@@ -64,7 +62,7 @@
       texstudio
       texlive.combined.scheme-medium
       zoom-us
-      # protonmail-bridge funzt ja garnicht
+      # protonmail-bridge # funzt irgendwie ned 
       teams-for-linux
       signal-desktop
     ];
@@ -101,7 +99,7 @@
     #  /etc/profiles/per-user/fripp/etc/profile.d/hm-session-vars.sh
     #
     sessionVariables = {
-      # EDITOR = "emacs";
+      EDITOR = "nvim";
     };
   };
 
@@ -131,9 +129,19 @@
       };
     };
 
+    nix-index = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+
+    fish = {
+      enable = true;
+    };
+
     alacritty = {
       enable = true;
       settings = {
+        terminal.shell = "fish";
         env.TERM = "xterm-256color";
         font = {
           size = 12;
