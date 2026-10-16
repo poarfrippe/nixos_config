@@ -9,6 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # aha hier koennte ich wahrscheinlich eine custom i3lock version herballern! oder?
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
@@ -18,6 +22,11 @@
       modules = [
         ./configuration.nix
         inputs.home-manager.nixosModules.default
+	{
+          home-manager.sharedModules = [
+            inputs.nix-index-database.homeModules.default
+          ];
+        }
       ];
     };
   };
